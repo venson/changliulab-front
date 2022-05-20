@@ -1,13 +1,20 @@
 <template>
   <div>
-  <el-carousel :interval="5000" arrow="always">
-    <el-carousel-item v-for="item in bannerList" :key="item">
-    <img :src="item" style="height:100%;width:100%" alt="图片不见了" />
+  <el-carousel :interval="3000" arrow="always">
+    <el-carousel-item v-for="(item, index) in bannerList" :key="index">
+    <img :src="item.imageUrl" style="height:100%;width:100%" alt="图片不见了" />
     </el-carousel-item>
   </el-carousel>
 <!-- group news section -->
-  <div class="news">
-    <el-link class="page-redir" href="http://xxx/news" :underline="false">Group News</el-link> 
+
+  <div>
+        <section class="container">
+          <div class="comm-title">
+            <h2 class="tac">
+              <span class="c-333">Group News</span>
+            </h2>
+          </div>
+          </section>
       <el-table
     :data="newsData"
     stripe
@@ -30,15 +37,54 @@
   </el-table>
   </div>
 <!-- group news section -->
-
+      <div>
+        <section class="container">
+          <div class="comm-title">
+            <h2 class="tac">
+              <span class="c-333">Group Members</span>
+            </h2>
+          </div>
+          <div>
+            <article class="i-teacher-list">
+              <ul class="of">
+                <li v-for="teacher in teacherList" :key="teacher.id">
+                  <section class="i-teach-wrap">
+                    <div class="i-teach-pic">
+                      <a href="/teacher/1" :title="teacher.name">
+                        <img :alt="teacher.name" :src="teacher.avatar">
+                      </a>
+                    </div>
+                    <div class="mt10 hLh30 txtOf tac">
+                      <a href="/teacher/1" :title="teacher.name" class="fsize18 c-666">{{teacher.name}}</a>
+                    </div>
+                    <div class="hLh30 txtOf tac">
+                      <span class="fsize14 c-999">{{teacher.career}}</span>
+                    </div>
+                    <div class="mt15 i-q-txt">
+                      <p
+                        class="c-999 f-fA"
+                      >{{teacher.intro}}</p>
+                    </div>
+                  </section>
+                </li>
+                
+              </ul>
+              <div class="clear"></div>
+            </article>
+            <section class="tac pt20">
+              <a href="/groupmember" title="All members" class="comm-btn c-btn-2">All Members</a>
+            </section>
+          </div>
+        </section>
+      </div>
 
     <el-divider></el-divider>
 <!-- course section -->
 
-  <div class="course">
+  <!-- <div class="course">
     <el-link class="page-redir" href="http://xxx/course" :underline="false">Public Class</el-link> 
       <el-table
-    :data="courseData"
+    :data="courseList"
     stripe
     style="width: 100%">
     <el-table-column
@@ -74,19 +120,72 @@
       </template>
     </el-table-column>
   </el-table>
-  </div>
+  </div> -->
+  <!-- more beautiful course list -->
+      <div>
+        <section class="container">
+          <div class="comm-title">
+            <h2 class="tac">
+              <span class="c-333">Top Courses</span>
+            </h2>
+          </div>
+          <div>
+            <article class="comm-course-list">
+              <ul class="of" id="bna">
+                <li v-for="course in courseList" :key="course.id">
+                  <div class="cc-l-wrap">
+                    <section class="course-img">
+                      <img
+                        :src="course.cover"
+                        class="img-responsive"
+                        :alt="course.title"
+                      >
+                      <div class="cc-mask">
+                        <a href="#" title="Start" class="comm-btn c-btn-1">Start</a>
+                      </div>
+                    </section>
+                    <h3 class="hLh30 txtOf mt10">
+                      <a href="#" :title="course.title" class="course-title fsize18 c-333">{{course.title}}</a>
+                    </h3>
+                    <section class="mt10 hLh20 of">
+                      <span class="fr jgTag bg-green" v-if="course.available === 0">
+                        <i class="c-fff fsize12 f-fA">免费公开</i>
+                      </span>
+                      <span class="fr jgTag bg-green" v-else-if="course.available === 1">
+                        <i class="c-fff fsize12 f-fA">免费需注册</i>
+                      </span>
+                      <span class="fl jgAttr c-ccc f-fA">
+                        <i class="c-999 f-fA">{{course.viewCount}}人学习</i>
+                      </span>
+                    </section>
+                  </div>
+                </li>
+               
+              </ul>
+              <div class="clear"></div>
+            </article>
+            <section class="tac pt20">
+              <a href="/course" title="All members" class="comm-btn c-btn-2">All Courses</a>
+            </section>
+            <el-divider></el-divider>
+            </div>
+            </section>
+            </div>
 <!-- course section -->
   </div>
 </template>
 
 <script>
+import banner from "@/api/banner"
+import index from '@/api/index'
 export default {
   name: 'MainPage',
   data() {
     return{
       bannerList: [
-        require("@/assets/img/pics/banner1.jpeg"),
-        require("@/assets/img/pics/banner2.jpeg"),
+        {
+        imageUrl: '',
+        }
       ],
       newsData: [
           {
@@ -107,37 +206,33 @@ export default {
           title: '晚上下雨',
         }
       ],
-
-      courseData: [
-          {
-          id: '2',
-          categorylvl1: '实验',
-          categorylvl2: '规范',
-          available: 'public',
-          title: '吃鸡基本要求',
-        }, 
-          {
-          id: '3',
-          categorylvl1: '统计学',
-          categorylvl2: '概率论',
-          available: 'public',
-          title: '吃鸡的成功率',
-        }, 
-          {
-          id: '4',
-          categorylvl1: '分析',
-          categorylvl2: '有机化学分析',
-          available: 'register',
-          title: '如何鸡的有机成分',
-        }, 
-      ]
+      courseList: []
     }
 
+  },
+    created(){
+    this.getBannerList()
+    this.getIndexData()
   },
   methods: {
     toNews(val){
       console.log(val)
-    }
+    },
+    getIndexData(){
+      index.getIndexData()
+      .then(response => {
+        this.courseList = response.data.data.course
+        this.teacherList = response.data.data.teacher
+        console.log(this.courseList)
+      })
+    },
+    getBannerList(){
+      banner.getBannerList()
+      .then(response =>{
+        this.bannerList = response.data.data.item
+        console.log(this.bannerList)
+      })
+    },
 
   }
   

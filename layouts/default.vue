@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <el-container>
+  <div class="in-wrap">
+    <el-container class="container">
       <el-header class="page-header">
           <!-- <span class="header-image"></span> -->
         <h1 class="lab-title">Welcome to Chang Liu LAB</h1>
@@ -50,11 +50,11 @@ import '~/assets/css/theme.css'
 import '~/assets/css/global.css'
 import '~/assets/css/web.css'
 import '~/assets/css/header.scss'
-// import '~/assets/css/base.css'
-// import '~/assets/css/activity_tab.css'
-// import '~/assets/css/bottom_rec.css'
-// import '~/assets/css/nice_select.css'
-// import '~/assets/css/order.css'
+import '~/assets/css/base.css'
+import '~/assets/css/activity_tab.css'
+import '~/assets/css/bottom_rec.css'
+import '~/assets/css/nice_select.css'
+import '~/assets/css/order.css'
 // import "~/assets/css/pages-weixinpay.css"
 
 import cookie from 'js-cookie'
