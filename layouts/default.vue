@@ -7,12 +7,13 @@
         <h2 class="lab-subtitle">Trees cell wall formation and wall signal Group</h2>
         <div class="el-menu">
         <el-menu class="main-menu" background-color="#318651" default-active="1" mode="horizontal" @select="handleSelect">
-          <el-menu-item index="1">主页</el-menu-item>
-          <el-menu-item index="2">研究方向</el-menu-item>
-          <el-menu-item index="3">发表论文</el-menu-item>
-          <el-menu-item index="4">组内成员</el-menu-item>
-          <el-menu-item index="5">近期活动</el-menu-item>
-          <el-menu-item index="6">研究方法</el-menu-item>
+          <el-menu-item index="">主页</el-menu-item>
+          <el-menu-item index="research">研究方向</el-menu-item>
+          <el-menu-item index="publication">发表论文</el-menu-item>
+          <el-menu-item index="groupmember">组内成员</el-menu-item>
+          <el-menu-item index="activites">近期活动</el-menu-item>
+          <el-menu-item index="methdology">研究方法</el-menu-item>
+          <el-menu-item index="course">公开课程</el-menu-item>
           <!-- <a href="/login" title="登录" class="ml5 vam h-r-login">
             <span>登录</span>
           </a>
@@ -89,6 +90,7 @@ export default {
   },
   methods: {
     handleSelect(key, keyPath) {
+      this.$router.push("/"+key)
       console.log(key, keyPath);
     },
     //微信登录显示的方法
