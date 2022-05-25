@@ -37,7 +37,6 @@
 
 .h-r-login a {
     cursor: pointer;
-    line-height: 50px;
     color: aliceblue;
 }
 
@@ -107,9 +106,10 @@
 .el-menu--horizontal .el-menu {
 	background: none;
 }
-.el-menu--horizontal>.el-menu-item{
+.el-menu--horizontal> .el-menu-item{
     height: 40px;
     line-height: 40px;
+    color: "#dadada" !important;
 }
 .el-menu--horizontal .el-menu .el-menu-item,
 .el-menu--horizontal .el-menu .el-submenu__title {
@@ -118,7 +118,7 @@
 	height: 36px;
 	line-height: 36px;
 	padding: 0 22px;
-	color: #929292 !important;
+	color: #dadada !important;
 	z-index: 100;
 	font-weight: 500;
 }
@@ -140,7 +140,7 @@
     // height:100%;
     // display: flex;
     // flex-direction: row;
-    line-height:300px;
+    // line-height:300px;
     background-size: 1040px 300px;
     padding: 0;
     background-image:url('@/assets/img/pics/forest-3.jpg');
@@ -185,4 +185,8 @@
 }
 .page-redir{
     vertical-align: middle;
+}
+.login-button{
+    width: 100%;
+    margin-bottom: 15px;
 }

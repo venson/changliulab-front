@@ -14,13 +14,18 @@
           <el-menu-item index="activites">近期活动</el-menu-item>
           <el-menu-item index="methdology">研究方法</el-menu-item>
           <el-menu-item index="course">公开课程</el-menu-item>
-          <!-- <a href="/login" title="登录" class="ml5 vam h-r-login">
-            <span>登录</span>
+          <ul class="h-r-login">
+            <li>
+          <a title="Log in" @click="login" >
+            <em class="icon18 login-icon">&nbsp;</em>
+            <span class="vam ml5">Log in</span>
           </a>
           |
-          <a href="/login" title="注册" class="ml5 vam h-r-login">
-            <span>注册</span>
-          </a> -->
+          <a title="signup" @click="signup">
+            <span class="vam ml5">Sign up</span>
+          </a>
+          </li>
+          </ul>
         </el-menu>
         </div>
         <div>
@@ -33,7 +38,42 @@
 
         <nuxt />
       </el-main>
-
+<!-- login dialog -->
+<el-dialog title="Log in" width="35%" center :visible.sync="loginFormVisible">
+  <el-form :model="member" label-width="80px">
+    <el-form-item label-width="0px" prop="email">
+      <el-input v-model="member.email" autocomplete="on" placeholder="E-mail"></el-input>
+    </el-form-item>
+    <el-form-item label-width="0px" prop="password">
+      <el-input type="password" v-model="member.password" placeholder="Password"></el-input>
+    </el-form-item>
+  </el-form>
+  <div slot="footer" class="dialog-footer">
+    <el-button type="success" class="login-button" @click="dialogFormVisible = false" >Log in</el-button>
+  </div>
+</el-dialog>
+<!-- login dialog -->
+<!-- signup dialog -->
+<el-dialog title="Sign up" width="35%" center :visible.sync="signupFormVisible">
+  <el-form :model="registerInfo" label-width="80px">
+    <el-form-item label-width="0px" prop="email">
+      <el-input v-model="registerInfo.email" autocomplete="on" placeholder="E-mail"></el-input>
+    </el-form-item>
+    <el-form-item label-width="0px" prop="nickName">
+      <el-input v-model="registerInfo.nickName" autocomplete="on" placeholder="Nick Name"></el-input>
+    </el-form-item>
+    <el-form-item label-width="0px" prop="password">
+      <el-input type="password" v-model="member.password1" placeholder="Password"></el-input>
+    </el-form-item>
+    <el-form-item label-width="0px" prop="password">
+      <el-input type="password" v-model="member.password2" placeholder="Password Repeat"></el-input>
+    </el-form-item>
+  </el-form>
+  <div slot="footer" class="dialog-footer">
+    <el-button type="success" class="login-button" @click="signupFormVisible = false" >Sign up</el-button>
+  </div>
+</el-dialog>
+<!-- signup dialog -->
       <el-footer class="page-footer">
         <h5>Copyright© Chang Liu Lab 2022-2042, All Rights Reserved  Ver.1.0.0.0  Design:Venson</h5>
         <h5><i class="el-icon-location-information"></i>: 中国 黑龙江哈尔滨市香坊区和兴路26号 CHINA &nbsp;&nbsp;</h5>
@@ -68,6 +108,14 @@ export default {
         title: "主页"
       },
       token: '',
+      registerInfo: {
+        email: '',
+      },
+      member:{
+        email: '',
+        password:'',
+      },
+      teacherList: null,
       loginInfo: {
         id: '',
         age: '',
@@ -75,7 +123,9 @@ export default {
         mobile: '',
         nickname: '',
         sex: ''
-      }
+      },
+      loginFormVisible: false,
+      signupFormVisible: false,
     }
   },
   created() {
@@ -89,6 +139,12 @@ export default {
     this.showInfo()
   },
   methods: {
+    login(){
+      this.loginFormVisible=true
+    },
+    signup(){
+      this.signupFormVisible=true
+    },
     handleSelect(key, keyPath) {
       this.$router.push("/"+key)
       console.log(key, keyPath);
@@ -103,7 +159,6 @@ export default {
       //调用接口，根据token值获取用户信息
       loginApi.getLoginUserInfo()
         .then(response => {
-          // console.log('################'+response.data.data.userInfo)
           this.loginInfo = response.data.data.userInfo
           cookie.set('guli_ucenter', this.loginInfo, { domain: 'localhost' })
         })
