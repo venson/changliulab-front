@@ -72,20 +72,20 @@
             <el-input v-model="registerInfo.nickName" autocomplete="on" placeholder="Nick Name"></el-input>
           </el-form-item>
           <el-form-item label-width="0px" prop="password">
-            <el-input type="password" v-model="member.password1" placeholder="Password"></el-input>
+            <el-input type="password" v-model="registerInfo.password" placeholder="Password"></el-input>
           </el-form-item>
           <el-form-item label-width="0px" prop="password">
             <el-input type="password" v-model="member.password2" placeholder="Password Repeat"></el-input>
           </el-form-item>
           <div>The code will expire in about 20 minutes.</div>
           <el-form-item label-width="0px" prop="securityCode">
-            <el-input v-model="member.securityCode" autocomplete="off" placeholder="Security Code">
+            <el-input v-model="registerInfo.securityCode" autocomplete="off" placeholder="Security Code">
               <el-button slot="suffix" type="text" @click="sendCode(registerInfo.email)">{{ codeText }}</el-button>
             </el-input>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
-          <el-button type="success" class="login-button" @click="signupFormVisible = false">Sign up</el-button>
+          <el-button type="success" class="login-button" @click="submitRegistration()">Sign up</el-button>
         </div>
       </el-dialog>
       <!-- signup dialog -->
@@ -115,7 +115,7 @@ import '~/assets/css/order.css'
 
 import cookie from 'js-cookie'
 import loginApi from '@/api/login'
-import registration from '@/api/registration'
+import registerApi from "@/api/registration"
 
 
 export default {
@@ -131,7 +131,7 @@ export default {
       loginInfo: '',
       registerInfo: {
         email: '',
-        nickname: '',
+        nickName: '',
         password: '',
         securityCode: '',
       },
@@ -160,18 +160,18 @@ export default {
         ],
         nickName: [
           { required: true, message: 'Nickname can not be empty', trigger: 'blur' },
-          { validator: this.checkNickName, triger: 'change' }
+          // { validator: this.checkNickName, triger: 'change' }
         ],
         password: [
-          { type: 'password', required: true, message: 'Password can not be empty', trigger: 'blur' },
-          { validator: this.checkPassword, trigger: 'change' }
+          // {required: true, message: 'Password can not be empty', trigger: 'blur' },
+          // { validator: this.checkPassword, trigger: 'change' }
         ],
         checkpassword: [
-          { type: 'password', required: true, message: 'Please retype your password', trigger: 'blur' },
-          { validator: this.checkRtypePassword, trigger: 'change' }
+          // {required: true, message: 'Please retype your password', trigger: 'blur' },
+          // { validator: this.checkRtypePassword, trigger: 'change' }
         ],
         securityCode: [
-          { required: true, message: 'Security Code can not be empty', trigger: 'blur' }
+          // { required: true, message: 'Security Code can not be empty', trigger: 'change' }
         ],
       }
     }
@@ -184,7 +184,7 @@ export default {
       this.wxLogin()
     }
 
-    // this.showInfo()
+    this.showInfo()
   },
   methods: {
     submitLogin() {
@@ -195,7 +195,12 @@ export default {
           cookie.set("changliuLab_token", response.data.data.token, { domain: 'localhost' })
           loginApi.getLoginInfo()
             .then(response => {
+              console.log("getloginInfo")
+              console.log(response.data.data.user)
               cookie.set("changliuLab_member", response.data.data.user, { domain: 'localhost' })
+              cookie.set("changliuLab_memberj", JSON.stringify(response.data.data.user), { domain: 'localhost' })
+              console.log("changliuLab_member")
+              console.log(cookie.get("changliuLab_member"))
             })
         })
     },
@@ -208,20 +213,22 @@ export default {
     },
     sendCode(val) {
       if (this.codeText === "Security Code") {
-        registration.sendCode(val)
+        registerApi.sendCode(val)
           .then(response => {
             this.timeDown();
           })
       }
     },
     // submit registration info
-    registration() {
-      registration.regiter(this.registerInfo)
+    submitRegistration() {
+      console.log(this.registerInfo)
+      registerApi.register(this.registerInfo)
         .then(response => {
           this.$message({
             type: 'success',
             message: 'Registration success'
           })
+          this.signupFormVisible= false
           this.member.email = this.registerInfo.email
           this.member.password = this.registerInfo.password
           this.login(member)
@@ -274,11 +281,15 @@ export default {
     //创建方法，从cookie获取用户信息
     showInfo() {
       //从cookie获取用户信息
-      var userStr = cookie.get('changliuLab_member')
+      var userStr = cookie.get('changliuLab_memberj')
+      console.log("userStr")
+      console.log(userStr)
       // 把字符串转换json对象(js对象)
       if (userStr) {
         this.loginInfo = JSON.parse(userStr)
       }
+      console.log("loginInfo")
+      console.log(this.loginInfo)
     },
 
     //退出
