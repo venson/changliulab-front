@@ -1,10 +1,12 @@
 import request from "@/utils/request"
+import { resourceUsage } from "process"
 
 export default {
     sendCode(email){
         return request({
             url: "/edumsm/msm/sendEmail",
             method: "post",
+            headers: {'Content-Type': 'application/json'},
             data: email
         })
     },
@@ -13,6 +15,19 @@ export default {
             url: "/educenter/member/register",
             method: "post",
             data: member
+        })
+    },
+    login(info){
+        return request({
+            url: "/educenter/member/login",
+            method: "post",
+            data: info
+        })
+    },
+    getMemberInfo(){
+        return request({
+            url: "/educenter/member/member",
+            method: "get"
         })
     }
 }
