@@ -1,5 +1,4 @@
 import request from "@/utils/request"
-import { resourceUsage } from "process"
 
 export default {
     sendCode(email){
