@@ -16,8 +16,8 @@
             <el-menu-item index="methdology">研究方法</el-menu-item>
             <el-menu-item index="course">公开课程</el-menu-item>
             <ul class="h-r-login">
-              <!-- <li v-if="!loginInfo.id" id="no-login"> -->
-              <li>
+              <li v-if="loginInfo.email !== member.email" id="no-login">
+              <!-- <li> -->
                 <a title="Log in" @click="loginDialog">
                   <em class="icon18 login-icon">&nbsp;</em>
                   <span class="vam ml5">Log in</span>
@@ -27,12 +27,28 @@
                   <span class="vam ml5">Sign up</span>
                 </a>
               </li>
-              <li>
-              <!-- <li v-if="loginInfo.id" id="is-login-one"> -->
-                <a id="headerMsgCountId" href="#" title="message">
-                  <em class="icon18 news-icon">&nbsp;</em>
-                </a>
-              </li>
+              <!-- <li> -->
+    <!-- <li v-if="loginInfo.id" id="is-login-one" class="mr10">
+        <a id="headerMsgCountId" href="#" title="消息">
+            <em class="icon18 news-icon">&nbsp;</em>
+        </a>
+        <q class="red-point" style="display: none">&nbsp;</q>
+    </li> -->
+    <!-- <li v-if="this.loginInfo.id" id="is-login-two" class="h-r-user"> -->
+    <li v-if="loginInfo.email === member.email" id="is-login-two" class="h-r-user">
+        <a href="/ucenter" title>
+            <img
+                 :src="loginInfo.avatar"
+                 width="30"
+                 height="30"
+                 class="vam picImg"
+                 alt
+                 >
+            <span id="userName" class="vam disIb">{{ loginInfo.nickname }} </span>
+        </a>
+        |
+        <a href="javascript:void(0);" title="退出" @click="logout()" class="ml5">Log out</a>
+    </li>
             </ul>
           </el-menu>
         </div>
@@ -128,7 +144,6 @@ export default {
       params: {},
       token: '',
       memberInfo: '',
-      loginInfo: '',
       registerInfo: {
         email: '',
         nickName: '',
@@ -188,20 +203,16 @@ export default {
   },
   methods: {
     submitLogin() {
-      console.log(this.member)
       loginApi.login(this.member)
         .then(response => {
           this.loginFormVisible = false;
           cookie.set("changliuLab_token", response.data.data.token, { domain: 'localhost' })
           loginApi.getLoginInfo()
             .then(response => {
-              console.log("getloginInfo")
-              console.log(response.data.data.user)
-              cookie.set("changliuLab_member", response.data.data.user, { domain: 'localhost' })
-              cookie.set("changliuLab_memberj", JSON.stringify(response.data.data.user), { domain: 'localhost' })
-              console.log("changliuLab_member")
-              console.log(cookie.get("changliuLab_member"))
+              cookie.set("changliuLab_member", JSON.stringify(response.data.data.user), { domain: 'localhost' })
             })
+            this.showInfo()
+            // this.$router.go()
         })
     },
     checkEmail(rule, value, callback) {
@@ -262,7 +273,6 @@ export default {
     },
     handleSelect(key, keyPath) {
       this.$router.push("/" + key)
-      console.log(key, keyPath);
     },
     //微信登录显示的方法
     wxLogin() {
@@ -281,24 +291,27 @@ export default {
     //创建方法，从cookie获取用户信息
     showInfo() {
       //从cookie获取用户信息
-      var userStr = cookie.get('changliuLab_memberj')
-      console.log("userStr")
-      console.log(userStr)
+      var userStr = cookie.get('changliuLab_member')
       // 把字符串转换json对象(js对象)
       if (userStr) {
         this.loginInfo = JSON.parse(userStr)
+      }else{
+        this.loginInfo = ""
       }
-      console.log("loginInfo")
-      console.log(this.loginInfo)
+        console.log("loginInfo")
+        console.log(this.loginInfo.email)
+        console.log("member")
+        console.log(this.member.email)
     },
 
     //退出
     logout() {
       //清空cookie值
-      cookie.set('guli_token', '', { domain: 'localhost' })
-      cookie.set('guli_ucenter', '', { domain: 'localhost' })
+      cookie.set('changliuLab_token', '', { domain: 'localhost' })
+      cookie.set('changliuLab_member', '', { domain: 'localhost' })
+      this.showInfo()
       //回到首页面
-      window.location.href = "/";
+      // this.$router.go()
     },
 
   }

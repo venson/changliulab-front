@@ -206,7 +206,8 @@ export default {
           title: '晚上下雨',
         }
       ],
-      courseList: []
+      courseList: [],
+      teacherList: [],
     }
 
   },
@@ -223,14 +224,12 @@ export default {
       .then(response => {
         this.courseList = response.data.data.course
         this.teacherList = response.data.data.teacher
-        console.log(this.courseList)
       })
     },
     getBannerList(){
       banner.getBannerList()
       .then(response =>{
         this.bannerList = response.data.data.item
-        console.log(this.bannerList)
       })
     },
 
