@@ -7,7 +7,11 @@ export default {
         url: `/eduservice/teacherfront/getTeacherFrontList/${page}/${limit}`,
         method: "get",
         })
-
-
+    },
+    getTeacherInfo(id){
+        return request({
+        url: `/eduservice/teacherfront/member/${id}`,
+        method: "get",
+        })
     },
 }

@@ -23,12 +23,12 @@
               <li v-for="member in data.records" :key="member.id">
                 <section class="i-teach-wrap" >
                   <div class="i-teach-pic">
-                    <a :href="`/member/${member.id}`" :title="member.name" target="_blank">
+                    <a :href="`/groupmember/${member.id}`" :title="member.name" >
                       <img :src="member.avatar" alt="teacher.name">
                     </a>
                   </div>
                   <div class="mt10 hLh30 txtOf tac">
-                    <a :href="`/member/${member.id}`" :title="member.name" target="_blank" class="fsize18 c-666">{{member.name}}</a>
+                    <a :href="`/groupmember/${member.id}`" :title="member.name" class="fsize18 c-666">{{member.name}}</a>
                   </div>
                   <div class="hLh30 txtOf tac">
                     <span class="fsize14 c-999">{{member.intro}}</span>
@@ -53,7 +53,7 @@
             >First</a>
             <a
             :class="{undisable: !data.hasPrevious}"
-            @click.prevent="goToPage(data.current -1)" 
+            @click.prevent="!!data.hasPrevious && goToPage(data.current -1)" 
             href="#" title="previous"
             >&lt;</a>
             <a v-for="page in data.pages" :key="page" 
@@ -61,12 +61,12 @@
             @click.prevent="goToPage(page)"
             >{{page}}</a>
             <a 
-            :class="{undisable: data.hasNext}"
-            @click.prevent="goToPage(data.current +1)" 
+            :class="{undisable: !data.hasNext}"
+            @click.prevent="!!data.hasNext && goToPage(data.current +1)" 
             href="#" title="Next">&gt;</a>
             <a 
             :class="{undisable: !data.hasNext}"
-            @click.prevent="goToPage(data.pages)" 
+            @click.prevent="!!data.hasNext && goToPage(data.pages)" 
             href="#" title="末页">End</a>
             <div class="clear"></div>
           </div>

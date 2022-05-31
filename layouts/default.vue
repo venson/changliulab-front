@@ -6,7 +6,7 @@
         <h1 class="lab-title">Welcome to Chang Liu LAB</h1>
         <h2 class="lab-subtitle">Trees cell wall formation and wall signal Group</h2>
         <div class="el-menu">
-          <el-menu class="main-menu" background-color="#318651" default-active="" mode="horizontal"
+          <el-menu class="main-menu" background-color="#318651" :default-active="this.$route.path.split('/')[1]" mode="horizontal"
             @select="handleSelect">
             <el-menu-item index="">主页</el-menu-item>
             <el-menu-item index="research">研究方向</el-menu-item>
@@ -141,7 +141,7 @@ export default {
         index: "main",
         title: "主页"
       },
-      params: {},
+      params: '',
       token: '',
       memberInfo: '',
       registerInfo: {
@@ -192,16 +192,22 @@ export default {
     }
   },
   created() {
+    this.init()
     //获取路径里面token值
+    this.showInfo()
+  },
+  methods: {
+    init(){
     this.token = this.$route.query.token
+    console.log("params")
+    console.log(this.$route.path)
+    console.log(this.$route.path.split("/")[1])
     console.log(this.token)
     if (this.token) {//判断路径是否有token值
       this.wxLogin()
     }
 
-    this.showInfo()
-  },
-  methods: {
+    },
     submitLogin() {
       loginApi.login(this.member)
         .then(response => {
@@ -272,7 +278,7 @@ export default {
       this.signupFormVisible = true
     },
     handleSelect(key, keyPath) {
-      this.$router.push("/" + key)
+      this.$router.push("/"+key)
     },
     //微信登录显示的方法
     wxLogin() {

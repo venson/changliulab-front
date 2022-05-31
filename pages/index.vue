@@ -50,7 +50,7 @@
                 <li v-for="teacher in teacherList" :key="teacher.id">
                   <section class="i-teach-wrap">
                     <div class="i-teach-pic">
-                      <a href="/teacher/1" :title="teacher.name">
+                      <a :href="`/groupmember/${teacher.id}`" :title="teacher.name">
                         <img :alt="teacher.name" :src="teacher.avatar">
                       </a>
                     </div>
