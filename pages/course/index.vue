@@ -59,7 +59,7 @@
                   </a>
               </li>
               <li :class="{'current bg-orange': filter.updateSort!=0}">
-                <a title="Update Date" href="javascropt:void(0)" @click="setUpdateSort()">Update Date&nbsp;
+                <a title="Update Date" href="javascript:void(0)" @click="setUpdateSort()">Update Date&nbsp;
                   <i class="el-icon-caret-bottom" v-if="filter.updateSort ===1"></i>
                   <i class="el-icon-caret-top" v-if="filter.updateSort ===2"></i>
                 </a>

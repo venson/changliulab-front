@@ -15,8 +15,8 @@
             <el-menu-item index="activites">近期活动</el-menu-item>
             <el-menu-item index="methdology">研究方法</el-menu-item>
             <el-menu-item index="course">公开课程</el-menu-item>
-            <ul class="h-r-login">
-              <li v-if="loginInfo.email !== member.email" id="no-login">
+            <ul class="h-r-login c-fff">
+              <li v-if="loginInfo ==='' || loginInfo.email == ''" id="no-login">
               <!-- <li> -->
                 <a title="Log in" @click="loginDialog">
                   <em class="icon18 login-icon">&nbsp;</em>
@@ -35,7 +35,7 @@
         <q class="red-point" style="display: none">&nbsp;</q>
     </li> -->
     <!-- <li v-if="this.loginInfo.id" id="is-login-two" class="h-r-user"> -->
-    <li v-if="loginInfo.email === member.email" id="is-login-two" class="h-r-user">
+    <li v-if="loginInfo !=='' && loginInfo.email !== ''" id="is-login-two" class="h-r-user">
         <a href="/ucenter" title>
             <img
                  :src="loginInfo.avatar"
@@ -199,10 +199,9 @@ export default {
   methods: {
     init(){
     this.token = this.$route.query.token
-    console.log("params")
-    console.log(this.$route.path)
-    console.log(this.$route.path.split("/")[1])
+    console.log("token")
     console.log(this.token)
+    console.log("token")
     if (this.token) {//判断路径是否有token值
       this.wxLogin()
     }
@@ -216,8 +215,8 @@ export default {
           loginApi.getLoginInfo()
             .then(response => {
               cookie.set("changliuLab_member", JSON.stringify(response.data.data.user), { domain: 'localhost' })
+              this.showInfo()
             })
-            this.showInfo()
             // this.$router.go()
         })
     },
@@ -302,12 +301,10 @@ export default {
       if (userStr) {
         this.loginInfo = JSON.parse(userStr)
       }else{
-        this.loginInfo = ""
+        this.loginInfo = ''
       }
         console.log("loginInfo")
         console.log(this.loginInfo.email)
-        console.log("member")
-        console.log(this.member.email)
     },
 
     //退出
