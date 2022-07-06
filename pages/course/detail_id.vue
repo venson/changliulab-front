@@ -1,3 +1,4 @@
+
 <template>
   <div id="aCoursesList" class="bg-fa of">
     <!-- /课程详情 开始 -->
@@ -34,7 +35,7 @@
               </span>
             </section>
             <section class="c-attr-mt">
-              <a :href="'/course/content/'+ course.id" title="立即观看" class="comm-btn c-btn-3">立即观看</a>
+              <a href="#" title="立即观看" class="comm-btn c-btn-3">立即观看</a>
             </section>
           </section>
         </aside>
@@ -87,9 +88,7 @@
                   <div class="course-txt-body-wrap">
                     <section class="course-txt-body">
                       <!-- <p v-html="course.description">{{course.description}}</p> -->
-                      <!-- <v-md-preview v-if="course.description" :text="course.description"></v-md-preview> -->
-                      <!-- <v-md-preview text="# title"></v-md-preview> -->
-                      <!-- <v-md-preview text="# chapter one ## section one ```mermaid graph LR A[Square Rect] -- Link text --> B((Circle)) A --> C(Round Rect) B --> D{Rhombus} C --> D ```"></v-md-preview> -->
+                      <v-md-preview :text="course.description"></v-md-preview>
                     </section>
                   </div>
                 </div>
@@ -99,31 +98,6 @@
                     <span>课程大纲</span>
                   </h6>
                   <section class="mt20">
-                    <div class="lh-menu-wrap">
-                      <menu id="lh-menu" class="lh-menu mt10 mr10">
-                        <ul>
-                          <!-- 文件目录 -->
-                          <li class="lh-menu-stair" v-for="chapter in chapterList" :key="chapter.id">
-                            <a href="javascript: void(0)" :title="chapter.title" class="current-1">
-                              <em class="lh-menu-i-1 icon18 mr10"></em>{{chapter.title}}
-                            </a>
-
-                            <ol class="lh-menu-ol" style="display: block;">
-                              <li class="lh-menu-second ml30" v-for="video in chapter.children" :key="video.id">
-                                <a :href="'/course/detail'+course.id" target="_blank">
-                                  <span class="fr">
-                                    <i class="free-icon vam mr10"></i>
-                                  </span>
-                                  <em class="lh-menu-i-2 icon16 mr5">&nbsp;</em>{{video.title}}
-                                </a>
-                              </li>
-                              
-                            </ol>
-
-                          </li>
-                        </ul>
-                      </menu>
-                    </div>
                   </section>
                 </div>
                 <!-- /课程大纲 -->
@@ -167,44 +141,18 @@
 import courseApi from "@/api/course"
 
 export default{
-  data() {
-    return {
-      courseId:'',
-      course: {
-        description: ''
-      }
-    }
-  },
-  created() {
-    if (this.$route.params && this.$route.params.id) {
-      this.courseId = this.$route.params.id
-      this.getCourseInfo()
-      // this.getChapterSection()
-    }
-
-  },
-  methods: {
-      getCourseInfo() {
-      courseApi.getCourseInfo(this.courseId)
-        .then(response => {
-          this.course = response.data.data.course
-          this.chapterList = response.data.data.chapter
-          console.log(this.course)
-        })
-    },
-  },
-  mounted() {
-    console.log(this.course)
-  },
     asyncData({params, error}){
         return courseApi.getCourseInfo(params.id)
         .then(response => {
-            console.log(response.data.data)
             return {
             course: response.data.data.course,
             chapterList: response.data.data.chapter
             }
-        })
+        }),
+        chapterApi.getChapterSection(this.courseId).then((response) => {
+        this.chapterSectionList = response.data.list;
+        console.log(this.chapterSectionList)
+      });
     }
 }
 </script>

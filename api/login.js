@@ -1,12 +1,11 @@
 import request from "@/utils/request"
 
 export default {
-    login(member){
+    login(user){
     return request({
-        url: "/educenter/member/login",
+        url: "/admin/acl/login",
         method: "post",
         data: member
-
         })
     },
     getLoginInfo(){

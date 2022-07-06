@@ -11,7 +11,7 @@
         <section class="container">
           <div class="comm-title">
             <h2 class="tac">
-              <span class="c-333">Group News</span>
+              <span class="c-333">近期活动</span>
             </h2>
           </div>
           </section>
@@ -41,29 +41,29 @@
         <section class="container">
           <div class="comm-title">
             <h2 class="tac">
-              <span class="c-333">Group Members</span>
+              <span class="c-333">组内成员</span>
             </h2>
           </div>
           <div>
-            <article class="i-teacher-list">
+            <article class="i-member-list">
               <ul class="of">
-                <li v-for="teacher in teacherList" :key="teacher.id">
-                  <section class="i-teach-wrap">
-                    <div class="i-teach-pic">
-                      <a :href="`/groupmember/${teacher.id}`" :title="teacher.name">
-                        <img :alt="teacher.name" :src="teacher.avatar">
+                <li v-for="member in memberList" :key="member.id">
+                  <section class="i-member-wrap">
+                    <div class="i-member-pic">
+                      <a :href="`/groupmember/${member.id}`" :title="member.name">
+                        <img :alt="member.name" :src="member.avatar">
                       </a>
                     </div>
                     <div class="mt10 hLh30 txtOf tac">
-                      <a href="/teacher/1" :title="teacher.name" class="fsize18 c-666">{{teacher.name}}</a>
+                      <a href="/member/1" :title="member.name" class="fsize18 c-666">{{member.name}}</a>
                     </div>
                     <div class="hLh30 txtOf tac">
-                      <span class="fsize14 c-999">{{teacher.career}}</span>
+                      <span class="fsize14 c-999">{{member.career}}</span>
                     </div>
                     <div class="mt15 i-q-txt">
                       <p
                         class="c-999 f-fA"
-                      >{{teacher.intro}}</p>
+                      >{{member.intro}}</p>
                     </div>
                   </section>
                 </li>
@@ -72,7 +72,7 @@
               <div class="clear"></div>
             </article>
             <section class="tac pt20">
-              <a href="/groupmember" title="All members" class="comm-btn c-btn-2">All Members</a>
+              <a href="/groupmember" title="All members" class="comm-btn c-btn-2">全部成员</a>
             </section>
           </div>
         </section>
@@ -126,7 +126,7 @@
         <section class="container">
           <div class="comm-title">
             <h2 class="tac">
-              <span class="c-333">Top Courses</span>
+              <span class="c-333">优秀课程</span>
             </h2>
           </div>
           <div>
@@ -141,7 +141,8 @@
                         :alt="course.title"
                       >
                       <div class="cc-mask">
-                        <a :href="`/course/${course.id}`" title="Start" class="comm-btn c-btn-1">Start</a>
+                        <!-- <a :href="`/course/${course.id}`" title="Start" class="comm-btn c-btn-1">Start</a> -->
+                        <a :href="`/course/${course.id}`" title="Start" class="comm-btn c-btn-1">开始</a>
                       </div>
                     </section>
                     <h3 class="hLh30 txtOf mt10">
@@ -149,8 +150,10 @@
                     </h3>
                     <section class="mt10 hLh20 of">
                       <span class="fr jgTag bg-green" v-if="course.available === 0">
+                      <!-- <span class="fr jgTag bg-green" v-show="course.available === 0"> -->
                         <i class="c-fff fsize12 f-fA">免费公开</i>
                       </span>
+                      <!-- <span class="fr jgTag bg-green" v-show="course.available === 1"> -->
                       <span class="fr jgTag bg-green" v-else-if="course.available === 1">
                         <i class="c-fff fsize12 f-fA">免费需注册</i>
                       </span>
@@ -165,7 +168,7 @@
               <div class="clear"></div>
             </article>
             <section class="tac pt20">
-              <a href="/course" title="All members" class="comm-btn c-btn-2">All Courses</a>
+              <a href="/course" title="All members" class="comm-btn c-btn-2">全部课程</a>
             </section>
             <el-divider></el-divider>
             </div>
@@ -207,7 +210,7 @@ export default {
         }
       ],
       courseList: [],
-      teacherList: [],
+      memberList: [],
     }
 
   },
@@ -223,7 +226,7 @@ export default {
       index.getIndexData()
       .then(response => {
         this.courseList = response.data.data.course
-        this.teacherList = response.data.data.teacher
+        this.memberList = response.data.data.member
       })
     },
     getBannerList(){

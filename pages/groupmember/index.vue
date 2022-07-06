@@ -2,7 +2,7 @@
   <div id="aCoursesList" class="bg-fa of">
     <!-- member list -->
     <section class="container">
-      <header class="comm-title all-teacher-title">
+      <header class="comm-title all-member-title">
         <section class="c-tab-title">
           <a id="subjectAll" title="all" href="#">All Group Members</a>
           <!-- <c:forEach var="subject" items="${subjectList }">
@@ -18,13 +18,13 @@
             <span class="c-666 fsize14 ml10 vam">Not members ...</span>
           </section>
           <!-- /无数据提示 结束 -->
-          <article class="i-teacher-list" v-if="data.total>0">
+          <article class="i-member-list" v-if="data.total>0">
             <ul class="of">
               <li v-for="member in data.records" :key="member.id">
-                <section class="i-teach-wrap" >
-                  <div class="i-teach-pic">
+                <section class="i-member-wrap" >
+                  <div class="i-member-pic">
                     <a :href="`/groupmember/${member.id}`" :title="member.name" >
-                      <img :src="member.avatar" alt="teacher.name">
+                      <img :src="member.avatar" alt="member.name">
                     </a>
                   </div>
                   <div class="mt10 hLh30 txtOf tac">
@@ -79,10 +79,10 @@
 </template>
 
 <script>
-import teacherApi from '@/api/teacher'
+import memberApi from '@/api/member'
 export default {
     asyncData({param, error}){
-        return teacherApi.getTeacherList(1,8)
+        return memberApi.getMemberList(1,8)
         .then(response => {
             return {data: response.data.data}
             console.log(data)
@@ -91,7 +91,7 @@ export default {
     },
     methods: {
       goToPage(page){
-        teacherApi.getTeacherList(page, 8)
+        memberApi.getMemberList(page, 8)
         .then(response=>{
           this.data = response.data.data
           console.log(this.data)

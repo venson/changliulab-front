@@ -1,7 +1,7 @@
 <template>
   <div class="in-wrap">
     <el-container class="container">
-      <el-header class="page-header">
+      <el-header class="page-header el-header-layout">
         <!-- <span class="header-image"></span> -->
         <h1 class="lab-title">Welcome to Chang Liu LAB</h1>
         <h2 class="lab-subtitle">Trees cell wall formation and wall signal Group</h2>
@@ -10,21 +10,20 @@
             @select="handleSelect">
             <el-menu-item index="">主页</el-menu-item>
             <el-menu-item index="research">研究方向</el-menu-item>
-            <el-menu-item index="publication">发表论文</el-menu-item>
+            <el-menu-item index="scholar">发表论文</el-menu-item>
             <el-menu-item index="groupmember">组内成员</el-menu-item>
             <el-menu-item index="activites">近期活动</el-menu-item>
             <el-menu-item index="methdology">研究方法</el-menu-item>
             <el-menu-item index="course">公开课程</el-menu-item>
             <ul class="h-r-login c-fff">
               <li v-if="loginInfo ==='' || loginInfo.email == ''" id="no-login">
-              <!-- <li> -->
-                <a title="Log in" @click="loginDialog">
+                <a title="登录" @click="loginDialog">
                   <em class="icon18 login-icon">&nbsp;</em>
-                  <span class="vam ml5">Log in</span>
+                  <span class="vam ml5">登录</span>
                 </a>
                 |
-                <a title="signup" @click="signup">
-                  <span class="vam ml5">Sign up</span>
+                <a title="注册" @click="signup">
+                  <span class="vam ml5">注册</span>
                 </a>
               </li>
               <!-- <li> -->
@@ -154,7 +153,7 @@ export default {
         email: '',
         password: '',
       },
-      teacherList: null,
+      memberList: null,
       loginInfo: {
         id: '',
         age: '',

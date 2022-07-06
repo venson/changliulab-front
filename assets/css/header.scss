@@ -2,7 +2,7 @@
     height: 20% !important;
 }
 .page-main{
-    height: 70%;
+    height: calc(100vh - 286px);
     background-position: left center;
     background-size: cover;
     margin: 0;
@@ -14,7 +14,7 @@
 
 }
 .page-footer{
-    height: 10%;
+    height: 5vh;
 
     background-position: left center;
     background-size: cover;
@@ -135,7 +135,7 @@
     text-align: center;
     line-height: 60px;
   }
-.el-header{
+.el-header-layout{
     // height: 245px !important;
     // height:100%;
     // display: flex;

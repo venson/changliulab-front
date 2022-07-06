@@ -32,7 +32,7 @@
       </div>
       <section class="mt30">
         <div>
-          <header class="comm-title all-teacher-title c-course-content">
+          <header class="comm-title all-member-title c-course-content">
             <h2 class="fl tac">
               <span class="c-333">Courses</span>
             </h2>
@@ -68,10 +68,10 @@
 </template>
 
 <script>
-import teacherApi from "@/api/teacher"
+import memberApi from "@/api/member"
 export default {
   asyncData({params, error}){
-    return teacherApi.getTeacherInfo(params.memberid)
+    return memberApi.getMemberInfo(params.memberid)
     .then(response => {
       return {
         member: response.data.data.member,

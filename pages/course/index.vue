@@ -95,7 +95,7 @@
                         <i class="c-fff fsize12 f-fA">免费需注册</i>
                       </span>
                     <span class="fl jgAttr c-ccc f-fA">
-                      <i class="c-999 f-fA">{{course.viewCount}} Views</i>
+                      <i class="c-999 f-fA">{{course.viewCount}} 人学习</i>
                     </span>
                   </section>
                 </div>
@@ -110,13 +110,13 @@
             <!-- undisable这个class是否存在，取决于数据属性hasPrevious -->
             <a 
             :class="{undisable: !data.hasPrevious}"
-            href="#" title="First"
+            href="#" title="首"
             @click.prevent="goToPage(1)"
-            >First</a>
+            >首</a>
             <a
             :class="{undisable: !data.hasPrevious}"
             @click.prevent="!!data.hasPrevious && goToPage(data.current -1)" 
-            href="#" title="previous"
+            href="#" title="上一页"
             >&lt;</a>
             <a v-for="page in data.pages" :key="page" 
             :class="{current: data.current == page, undisable: data.current == page}"
@@ -125,11 +125,11 @@
             <a 
             :class="{undisable: !data.hasNext}"
             @click.prevent="!!data.hasNext && goToPage(data.current +1)" 
-            href="#" title="Next">&gt;</a>
+            href="#" title="下一页">&gt;</a>
             <a 
             :class="{undisable: !data.hasNext}"
             @click.prevent="!!data.hasNext && goToPage(data.pages)" 
-            href="#" title="末页">End</a>
+            href="#" title="末">末</a>
             <div class="clear"></div>
           </div>
         </div>

@@ -113,7 +113,7 @@
   color: #C01920
 }
 
-.GoodList td.teacher {
+.GoodList td.member {
   text-align: left;
   line-height: 1;
   padding: 30px 0 20px 30px;
@@ -237,7 +237,7 @@
   background-image: url(/edu/center/images/checked.png);
 }
 
-.GoodList .checkbox.teacher {
+.GoodList .checkbox.member {
   background-position: 30px 29px;
 }
 
