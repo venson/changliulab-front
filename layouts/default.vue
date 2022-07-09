@@ -12,7 +12,7 @@
             <el-menu-item index="research">研究方向</el-menu-item>
             <el-menu-item index="scholar">发表论文</el-menu-item>
             <el-menu-item index="groupmember">组内成员</el-menu-item>
-            <el-menu-item index="activites">近期活动</el-menu-item>
+            <el-menu-item index="activity">近期活动</el-menu-item>
             <el-menu-item index="methdology">研究方法</el-menu-item>
             <el-menu-item index="course">公开课程</el-menu-item>
             <ul class="h-r-login c-fff">
