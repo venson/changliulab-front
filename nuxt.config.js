@@ -109,7 +109,7 @@ export default {
   },
   publicRuntimeConfig: {
     axios: {
-      // baseURL: process.env.NODE_ENV ==='production'? 'http://119.12.172.94:8222':'http://localhost:8222'
+      baseURL: process.env.NODE_ENV ==='production'? 'http://119.12.172.94:8222':'http://localhost:8222'
       // baseURL: process.env.NODE_ENV ==='development'? 'http://119.12.172.94:8222':'http://localhost:8222'
     }
   },
