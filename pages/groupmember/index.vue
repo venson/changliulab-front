@@ -1,103 +1,105 @@
 <template>
-  <div id="aCoursesList" class="bg-fa of">
-    <!-- member list -->
-    <section class="container">
-      <header class="comm-title all-member-title">
-        <section class="c-tab-title">
-          <a id="subjectAll" title="all" href="#">All Group Members</a>
-          <!-- <c:forEach var="subject" items="${subjectList }">
-                            <a id="${subject.subjectId}" title="${subject.subjectName }" href="javascript:void(0)" onclick="submitForm(${subject.subjectId})">${subject.subjectName }</a>
-          </c:forEach>-->
-        </section>
-      </header>
-      <section class="c-sort-box unBr">
-        <div>
-          <!-- /无数据提示 开始 -->
-          <section class="no-data-wrap" v-if="data.total===0">
-            <em class="icon30 no-data-ico">&nbsp;</em>
-            <span class="c-666 fsize14 ml10 vam">Not members ...</span>
-          </section>
-          <!-- /无数据提示 结束 -->
-          <article class="i-member-list" v-if="data.total>0">
-            <ul class="of">
-              <li v-for="member in data.records" :key="member.id">
-                <section class="i-member-wrap" >
-                  <div class="i-member-pic">
-                    <a :href="`/groupmember/${member.id}`" :title="member.name" >
-                      <img :src="member.avatar" alt="member.name">
-                    </a>
-                  </div>
-                  <div class="mt10 hLh30 txtOf tac">
-                    <a :href="`/groupmember/${member.id}`" :title="member.name" class="fsize18 c-666">{{member.name}}</a>
-                  </div>
-                  <div class="hLh30 txtOf tac">
-                    <span class="fsize14 c-999">{{member.intro}}</span>
-                  </div>
-                  <div class="mt15 i-q-txt">
-                    <p class="c-999 f-fA">{{member.carrer}}</p>
-                  </div>
-                </section>
-              </li>
-            </ul>
-            <div class="clear"></div>
-          </article>
+  <div class=" flex  justify-center items-center">
+    <div class="max-w-7xl w-full p-8">
+      <div class="my-4 bg-gray-100">
+        <button
+          class="pr-4 text-center p-4"
+          :class="
+            level === MemberLevel.PI
+              ? 'text-green-600 border-b-2 border-green-800'
+              : ''
+          "
+          @click="goTo(MemberLevel.PI)"
+        >
+          主要成员
+        </button>
+        <button
+          class="pr-4 text-center p-4"
+          :class="
+            level === MemberLevel.CURRENT_MEMBER
+              ? 'text-green-600 border-b-2 border-green-800'
+              : ''
+          "
+          @click="goTo(MemberLevel.CURRENT_MEMBER)"
+         >当前成员</button>
+        <button
+          class="pr-4 text-center p-4"
+          :class="
+            level === MemberLevel.FORMER_MEMBER
+              ? 'text-green-600 border-b-2 border-green-800'
+              : ''
+          "
+          @click="goTo(MemberLevel.FORMER_MEMBER)"
+        >毕业成员</button>
+        <button
+          class="pr-4 text-center p-4"
+          :class="
+            level === MemberLevel.INTERN
+              ? 'text-green-600 border-b-2 border-green-800'
+              : ''
+          "
+          @click="goTo(MemberLevel.INTERN)"
+        >实习</button>
+      </div>
+
+      <div class="flex flex-col sm:flex-row " >
+        <MemberCard
+          v-show="pageMember.total>0"
+          class="sm:basis-1/2 md:basis-1/4 m-2"
+          v-for="(member, index) in pageMember.records"
+          :key="index"
+          :member="member"
+        />
+        <div v-show="pageMember.total===0" class="w-full">
+          No Content
+
         </div>
-        <!-- 公共分页 开始 -->
-        <div>
-          <div class="paging">
-            <!-- undisable这个class是否存在，取决于数据属性hasPrevious -->
-            <a 
-            :class="{undisable: !data.hasPrevious}"
-            href="#" title="First"
-            @click.prevent="goToPage(1)"
-            >First</a>
-            <a
-            :class="{undisable: !data.hasPrevious}"
-            @click.prevent="!!data.hasPrevious && goToPage(data.current -1)" 
-            href="#" title="previous"
-            >&lt;</a>
-            <a v-for="page in data.pages" :key="page" 
-            :class="{current: data.current == page, undisable: data.current == page}"
-            @click.prevent="goToPage(page)"
-            >{{page}}</a>
-            <a 
-            :class="{undisable: !data.hasNext}"
-            @click.prevent="!!data.hasNext && goToPage(data.current +1)" 
-            href="#" title="Next">&gt;</a>
-            <a 
-            :class="{undisable: !data.hasNext}"
-            @click.prevent="!!data.hasNext && goToPage(data.pages)" 
-            href="#" title="末页">End</a>
-            <div class="clear"></div>
-          </div>
-        </div>
-        <!-- 公共分页 结束 -->
-      </section>
-    </section>
-    <!-- /讲师列表 结束 -->
+      </div>
+      <Pagination :page="pageMember"/>
+    </div>
   </div>
 </template>
 
 <script>
-import memberApi from '@/api/member'
+import MemberCard from "../../components/MemberCard.vue";
+import { MemberLevel } from "@/common/types";
+import Pagination from "../../components/Pagination.vue";
 export default {
-    asyncData({param, error}){
-        return memberApi.getMemberList(1,8)
-        .then(response => {
-            return {data: response.data.data}
-            console.log(data)
-        })
-
+  watchQuery: ["page", "level"],
+  asyncData({ param, error, $memberApi, query }) {
+    const page = query.page ? query.page : 1;
+    const level = query.level ? query.level : MemberLevel.PI;
+    return $memberApi.getPageMembersByLevel(page, 8, level).then((response) => {
+      console.log(response.data);
+      return { pageMember: response.data,
+              level: level };
+    });
+  },
+  data() {
+    return {
+      MemberLevel: MemberLevel,
+    };
+  },
+  methods: {
+    goToPI() {
+      this.$router.push({
+        path: "/groupmember",
+        query: { page: 1, level: MemberLevel.PI },
+      });
     },
-    methods: {
-      goToPage(page){
-        memberApi.getMemberList(page, 8)
-        .then(response=>{
-          this.data = response.data.data
-          console.log(this.data)
-        })
-      }
+    goToCM() {
+      this.$router.push({
+        path: "/groupmember",
+        query: { page: 1, level: MemberLevel.CURRENT_MEMBER },
+      });
     },
-}
-
+    goTo(level) {
+      this.$router.push({
+        path: "/groupmember",
+        query: { page: 1, level: level },
+      });
+    },
+  },
+  components: { MemberCard, Pagination },
+};
 </script>

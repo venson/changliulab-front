@@ -1,33 +1,31 @@
 <template>
-    <div>
-        <v-md-preview :text="research.publishedMd"></v-md-preview>
+  <div class="flex justify-center items-center">
+    <div class="w-full max-w-7xl">
+      <div class="p-8" v-html="research"></div>
     </div>
+  </div>
 </template>
 <script>
-import researchApi from '@/api/research'
-export default({
-    data(){
-        return {
-        research: {
-            publishedMd: '',
-
-        },
-        lang:'zh'
-        }
-    },
-    created(){
-        this.getResearch(this.lang)
-    },
-    methods: {
-        getResearch(lang){
-            researchApi.getResearch(lang)
-            .then(response=>{
-                console.log(response)
-                this.research = response.data.data.item
-            })
-
-        }
-    },
-
-})
+import pako from "pako";
+import { base64ToBytes } from "@/utils/base64";
+import { Language } from "@/common/types";
+export default {
+  asyncData({ $researchApi }) {
+    return $researchApi.getResearch(Language.CHINESE).then((response) => {
+      let html;
+      try {
+        const bytes = base64ToBytes(response.data.publishedHtmlBrBase64);
+        html = pako.inflate(bytes, { to: "string" });
+      } catch (error) {
+        html = " ";
+      }
+      return {
+        research: html,
+      };
+    });
+  },
+  data() {},
+  created() {},
+  methods: {},
+};
 </script>

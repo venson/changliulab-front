@@ -1,84 +1,67 @@
 <template>
-  <div id="aCoursesList" class="bg-fa of">
-    <!-- 讲师介绍 开始 -->
-    <section class="container">
-      <header class="comm-title">
-        <h2 class="fl tac">
-          <span class="c-333">Member Info</span>
-        </h2>
-      </header>
-      <div class="t-infor-wrap">
-        <!-- 讲师基本信息 -->
-        <section class="fl t-infor-box c-desc-content">
-          <div class="mt20 ml20">
-            <section class="t-infor-pic">
-              <img :src="member.avatar">
-            </section>
-            <h3 class="hLh30">
-              <span class="fsize24 c-333">{{member.name}}</span>
-            </h3>
-            <section class="mt10">
-              <span class="t-tag-bg">{{member.career}}</span>
-            </section>
-            <section class="t-infor-txt">
-              <p
-                class="mt20"
-              >{{member.intro}}</p>
-            </section>
-            <div class="clear"></div>
-          </div>
-        </section>
-        <div class="clear"></div>
-      </div>
-      <section class="mt30">
-        <div>
-          <header class="comm-title all-member-title c-course-content">
-            <h2 class="fl tac">
-              <span class="c-333">Courses</span>
-            </h2>
-            <section class="c-tab-title">
-              <a href="javascript: void(0)">&nbsp;</a>
-            </section>
-          </header>
-          <!-- /无数据提示 开始-->
-          <!-- /无数据提示 结束-->
-          <article class="comm-course-list" v-if="courseList.length>0">
-            <ul class="of">
-              <li v-for="course in courseList" :key="course.id">
-                <div class="cc-l-wrap">
-                  <section class="course-img">
-                    <img :src="course.cover" class="img-responsive" >
-                    <div class="cc-mask">
-                      <a :href="`/course/${course.id}`" title="Start" target="_blank" class="comm-btn c-btn-1">Start</a>
-                    </div>
-                  </section>
-                  <h3 class="hLh30 txtOf mt10">
-                    <a href="#" title="course.title" target="_blank" class="course-title fsize18 c-333">{{course.title}}</a>
-                  </h3>
-                </div>
-              </li>
-            </ul>
-            <div class="clear"></div>
-          </article>
+  <div class="flex justify-center items-center">
+    <div class="max-w-7xl w-full divide-y">
+      <div class="flex p-4">
+        <nuxt-img class="h-40 w-40 rounded-full" :src="member.avatar" />
+        <div class="pl-4">
+          <p class="text-3xl">{{ member.name }}</p>
+          <p class="text-sm">{{ member.title }}</p>
+          <p>{{ member.intro }}</p>
+          <p>{{ member.career }}</p>
         </div>
-      </section>
-    </section>
-    <!-- /讲师介绍 结束 -->
+      </div>
+      <div class="p-4">
+        <p class="text-2xl pb-2">职业履历</p>
+        <div>{{ member.career }}</div>
+      </div>
+      <div class="p-4">
+        <p class="text-2xl pb-2">发表论文</p>
+        <ScholarTable class="w-full" :scholars="pageScholar.records" />
+        <Pagination :page="pageScholar" @goToPage="goToScholarPage"/>
+      </div>
+      <div class="p-4">
+        <p class="text-2xl pb-2">主讲课程</p>
+        <div class="flex flex-col sm:flex-row">
+          <CourseCard
+          class="sm:basis-1/2 md:basis-1/4"
+           v-for="(course, index) in pageCourse.records" :key="index" :value="course" />
+        </div>
+        <Pagination :page="pageCourse" @goToPage="goToCoursePage"/>
+
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import memberApi from "@/api/member"
+import CourseCard from '../../components/CourseCard.vue';
+import Pagination from '../../components/Pagination.vue';
+import ScholarTable from '../../components/ScholarTable.vue';
+
 export default {
-  asyncData({params, error}){
-    return memberApi.getMemberInfo(params.memberid)
-    .then(response => {
-      return {
-        member: response.data.data.member,
-        courseList: response.data.data.list
+  watchQuery:['spage','cpage'],
+    async asyncData({ params, error, $memberApi, $courseApi, $scholarApi, query, }) {
+        const scholarPage = query.spage ? query.spage : 1;
+        const coursePage = query.cpage ? query.cpage : 1;
+        const memberRes = await $memberApi.getMemberById(params.memberid);
+        const scholarRes = await $scholarApi.getPageScholarByMemberId(params.memberid, scholarPage, 8);
+        const courseRes = await $courseApi.getPageCourseByMemberId(params.memberid, coursePage, 8);
+        return {
+            member: memberRes.data,
+            pageCourse: courseRes.data,
+            pageScholar: scholarRes.data,
+            scholarPageNum: scholarPage,
+            coursePageNum: coursePage,
+        };
+    },
+    components: { CourseCard, Pagination, ScholarTable },
+    methods: {
+      goToCoursePage(page){
+        this.$router.push({path:''}, {query:{spage:this.scholarPageNum, cpage:page}})
+      },
+      goToScholarPage(page){
+        this.$router.push({path:''}, {query:{spage:page, cpage:this.coursePageNum}})
       }
-    })
-  },
-  
-}
+    },
+};
 </script>

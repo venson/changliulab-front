@@ -12,7 +12,6 @@
 </div>
 </template>
 <script>
-import activityApi from '@/api/activity'
 export default{
     data(){
         return {
