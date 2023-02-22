@@ -52,7 +52,7 @@
             "
             @click="goToPage(pageNumber)"
           >
-            {{ pageNumber }} <span class="visually-hidden">(current)</span>
+            {{ pageNumber }}
           </button>
         </li>
         <!-- <li class="page-item active"><a
