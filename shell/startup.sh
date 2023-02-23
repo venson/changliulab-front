@@ -22,6 +22,6 @@ startService(){
   else
     echo "=========="
     echo "start service"
-    nohup "yarn start"  >> "/dev/null" 2>&1 &
+    nohup yarn start  >> "/dev/null" 2>&1 &
   fi
 }
