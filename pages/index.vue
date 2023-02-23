@@ -4,8 +4,8 @@
       <ImgCarousel :value="banners" />
       <!-- <LabCarousel  :value="banners"/> -->
     </div>
-    <div>
-      <div class="m-8 text-center font-semibold text-3xl">近期活动</div>
+    <div class="pt-8">
+      <div class=" text-center font-semibold text-3xl">近期活动</div>
       <div class="">
         <ActivityTable :value="activityList" />
         <!-- <div v-for="(activity,index) in activityList" :key="index" class="sm:basis-1/2 md:basis-1/4 mx-1">
@@ -13,7 +13,7 @@
         </div> -->
       </div>
     </div>
-    <div class="py-8">
+    <div class="py-4" v-if="memberList">
       <div class="py-4 text-center font-semibold text-3xl">实验室成员</div>
       <div class="flex flex-col sm:flex-row">
         <div
@@ -26,7 +26,7 @@
       </div>
     </div>
 
-    <div>
+    <div class="py-4" v-if="courseList">
       <div class="m-8 text-center font-semibold text-3xl">优秀课程</div>
       <div class="flex flex-col sm:flex-row">
         <div
