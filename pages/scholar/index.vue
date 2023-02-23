@@ -20,12 +20,6 @@ export default {
   watchQuery: ['page','sort'],
   data() {
     return {
-      pageScholar:{
-        records:[],
-      },
-      yearRange: [2001, 2002],
-      page: 1,
-      limit: 10,
     };
   },
   asyncData({ $scholarApi,params,route,query }) {
@@ -34,7 +28,7 @@ export default {
     console.log('query',query.page)
     console.log('fullpath', route.fullPath)
     const pageNum = query.page? query.page: 1;
-    return $scholarApi.getPageScholar(pageNum, 1).then((res) => {
+    return $scholarApi.getPageScholar(pageNum, 8).then((res) => {
       return {
         pageScholar: res.data,
       };
