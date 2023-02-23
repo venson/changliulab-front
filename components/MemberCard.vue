@@ -6,14 +6,16 @@
     </div>
     <div class=" pb-4 text-center">
         <div class="font-semibold text-xl">
-        {{member.name}}
+        {{member.name}} {{ member.title }}
         </div>
+        <hr
+  class="my-4 h-0.5 border-t-0 bg-neutral-100 opacity-100 dark:opacity-50" />
         <div>
         {{member.intro}}
         </div>
-        <div class="border-t pt-2 border-gray-400 border-dashed">
+        <!-- <div class="border-t pt-2 border-gray-400 border-dashed">
             {{member.career}}
-        </div>
+        </div> -->
     </div>
   </div>
 
