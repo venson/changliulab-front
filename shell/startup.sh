@@ -1,4 +1,4 @@
-CMD="yarn start"
+CMD="node"
 
 checkPid(){
     echo "Checking if the server is running"
@@ -15,7 +15,7 @@ checkPid(){
 
 startService(){
   checkPid
-  if[ "${pid}" != 0]; then
+  if [ "${pid}" != 0]; then
   echo " Kill running service"
   killCurrentRunning
   startService
