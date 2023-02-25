@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* @layer base{
+    ol{
+        @apply list-decimal;
+    }
+} */
+@layer components{
+
+.markdown-body ol[type=i] {
+  @apply  list-[lower-roman];
+}
+    .markdown-body {
+        @apply list-decimal;
+    }
+}

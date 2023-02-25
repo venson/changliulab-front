@@ -1,7 +1,7 @@
 <template>
   <div class="flex justify-center items-center">
     <div class="w-full max-w-7xl ">
-      <div class=" p-8" v-html="methodology"></div>
+      <div class=" p-8 markdown-body" v-html="methodology"></div>
     </div>
   </div>
 </template>
@@ -17,6 +17,7 @@ export default {
       try {
         const bytes = base64ToBytes(response.data.publishedHtmlBrBase64);
         html = pako.inflate(bytes, { to: "string" });
+        console.log(html)
       } catch (error) {
         html = " ";
       }
@@ -27,3 +28,5 @@ export default {
   },
 };
 </script>
+<style module>
+</style>
