@@ -64,10 +64,9 @@ export default {
       8,
       8
     );
-    const researches = res.data.researches;
-    console.log(res)
-    console.log(researches)
-    if(researches && researches.length>0)
+    let researches;
+    if(res.data.researches && res.data.researches.length>0)
+    researches = res.data.researches;
     researches.forEach((research) => {
       try {
         const bytes = base64ToBytes(research.publishedHtmlBrBase64);
