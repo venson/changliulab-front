@@ -3,7 +3,8 @@ const url = 'eduservice/front/methodology'
 
 export default($axios)=>{
     return {
-        getMethodology:(lang)=>$axios.get(`${url}/${lang}`)
+        getPageMethodology:(current, size)=>$axios.get(`${url}/${current}/${size}`),
+        getMethodologyById:(id)=>$axios.get(`${url}/${id}`)
     }
 
 }
