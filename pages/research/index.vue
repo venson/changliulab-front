@@ -1,31 +1,36 @@
 <template>
   <div class="flex justify-center items-center">
     <div class="w-full max-w-7xl">
-      <div class="p-8" v-html="research"></div>
+      <ResearchViewer :value="researches" />
     </div>
   </div>
 </template>
 <script>
 import pako from "pako";
 import { base64ToBytes } from "@/utils/base64";
-import { Language } from "@/common/types";
+import ResearchViewer from "../../components/ResearchViewer.vue";
 export default {
-  asyncData({ $researchApi }) {
-    return $researchApi.getResearch(Language.CHINESE).then((response) => {
-      let html;
-      try {
-        const bytes = base64ToBytes(response.data.publishedHtmlBrBase64);
-        html = pako.inflate(bytes, { to: "string" });
-      } catch (error) {
-        html = " ";
-      }
-      return {
-        research: html,
-      };
-    });
-  },
-  data() {},
-  created() {},
-  methods: {},
+    asyncData({ $researchApi }) {
+        return $researchApi.getResearch().then((response) => {
+            let html = new Array();
+            let researches = response.data;
+            console.log(researches);
+            researches.forEach((research) => {
+                try {
+                    const bytes = base64ToBytes(research.publishedHtmlBrBase64);
+                    // html.push(pako.inflate(bytes, { to: "string" }));
+                    research.html = pako.inflate(bytes, { to: "string" });
+                }
+                catch (error) {
+                  research.html = " "
+                    // html.push(" ");
+                }
+            });
+            return {
+                researches: researches,
+            };
+        });
+    },
+    components: { ResearchViewer }
 };
 </script>
