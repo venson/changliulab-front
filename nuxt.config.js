@@ -77,16 +77,8 @@ export default {
   buildModules: ["@nuxt/postcss8", "@nuxt/image"],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ["@nuxtjs/axios", "@nuxtjs/auth-next", "@nuxt/image"],
-  // markdownit: {
-  // preset: 'default',
-  // linkify: true,
-  // breaks: true,
-  // use: [
-  //   'markdown-it-div',
-  //   'markdown-it-attrs'
-  // ]
-  // },
+  modules: ["@nuxtjs/axios", "@nuxtjs/auth-next", "@nuxt/image",    '@nuxtjs/proxy'
+],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
@@ -124,13 +116,15 @@ export default {
     axios: {
       // baseURL: process.env.NODE_ENV ==='production'? 'http://www.changliulab:8222':'http://localhost:8222'
       // baseURL: process.env.NODE_ENV ==='development'? 'http://119.12.172.94:8222':'http://localhost:8222'
-      // baseURL: 'http://119.12.172.94:8222'
+      baseURL: 'http://www.changliulab.com:8222'
     }
   },
   proxy: {
     '/api/': { target: 'http://www.changliulab.com', pathRewrite: {'^/api/': ''} }
   },
   axios: {
+    // proxy: true,
+    prefix: '/api'
     // baseURL: "http://localhost:8222", // Used as fallback if no runtime config is provided
     // baseURL: "http://localhost:8222", // Used as fallback if no runtime config is provided
   },
