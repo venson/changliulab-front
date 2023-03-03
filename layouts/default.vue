@@ -1,6 +1,7 @@
 <template>
   <div class="flex flex-col h-screen justify-between">
-    <LayoutHeader backgroundimg="/img/forest-3.jpg" />
+    <!-- <LayoutHeader backgroundimg="/img/forest-3.jpg" /> -->
+    <LayoutHeader backgroundimg="/svg/hero-gradient.svg" />
 
     <nuxt class="mb-auto" />
     <InfoFooter />
