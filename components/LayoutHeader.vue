@@ -1,6 +1,6 @@
 <template>
-    <header class="bg-green-700">
-        <div class="relative">
+    <header class="">
+        <!-- <div class="relative">
             <nuxt-img class="object-cover h-24 sm:h-32 w-full" :src="backgroundimg"></nuxt-img>
             <div class="absolute top-8 sm:top-12 px-2">
                 <div class="text-2xl text-white sm:text-4xl sm:px-4 italic">Welcome to Chang Liu LAB</div>
@@ -10,8 +10,26 @@
                 <LabMenu class=""  ></LabMenu>
                 <LabAvatar></LabAvatar>
             </div>
-            
+        </div> -->
+        <div class="relative">
+            <nuxt-img class="object-cover h-24 sm:h-32 w-full" :src="backgroundimg"></nuxt-img>
 
+            <div class="absolute top-8 sm:top-12 px-2 ">
+                <div class="font-extrabold sm:text-4xl sm:px-4">
+
+                    <span>Welcome to</span>
+                    <span class="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-green-700 via-emerald-500  to-teal-400  ">Chang Liu Team</span>
+                </div>
+                <!-- <div class="font-extrabold text-transparent text-8xl bg-clip-text bg-gradient-to-r from-green-200 via-green-700  to-green-300  text-white sm:text-4xl sm:px-4 italic">Welcome to Chang Liu Team</div> -->
+                <div class="text-md  text-green-700 sm:text-xl lg:text-2xl sm:px-4 italic">Trees cell wall formation and wall signal Group</div>
+            </div>
+            <div class="bg-green-400">
+
+                <div class="flex justify-between items-center max-w-7xl mx-auto ">
+                    <LabMenu class=""  ></LabMenu>
+                    <LabAvatar></LabAvatar>
+                </div>
+            </div>
         </div>
     </header>
 
