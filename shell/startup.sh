@@ -3,7 +3,7 @@ CMD="node"
 
 checkPid(){
     echo "Checking if the server is running"
-    ps=$(ps | grep "${CMD}")
+    ps=$(ps -e | grep "${CMD}")
     if [ -n "$ps" ]; then
       echo "Following PID are the server"
       pid=$(echo "$ps" | awk '{print $1}')
