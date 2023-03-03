@@ -4,7 +4,8 @@ export default($axios)=> {
     return {
         getPIMembers:()=>$axios.get(`${url}`),
         getPageMembersByLevel:(page,limit,level)=>$axios.get(`${url}/${page}/${limit}`,{params: {level: level}}),
-        getMemberById:(id)=>$axios.get(`${url}/${id}`)
-
+        getMemberById:(id, sPage, cPage, sSize, cSize)=>$axios.get(`${url}/${id}`,
+         {params:{sPage: sPage, cPage:cPage, sSize,cSize}}
+        )
     }
 }
