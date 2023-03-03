@@ -44,6 +44,19 @@ export default {
       {
         src:"https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js"
 
+      },
+      {
+        hid: 'stripe',
+        src: "https://cdn.bootcdn.net/ajax/libs/KaTeX/0.16.4/contrib/auto-render.min.js"
+        ,defer: true
+      },
+      {
+      hid: 'stripe',
+        src: "https://cdn.bootcdn.net/ajax/libs/KaTeX/0.16.4/katex.min.js", defer: true
+      },
+      {
+        src: 'https://cdn.bootcdn.net/ajax/libs/bytemd/1.20.2/index.umd.js'
+
       }
     ],
   },
@@ -109,12 +122,16 @@ export default {
   },
   publicRuntimeConfig: {
     axios: {
-      baseURL: process.env.NODE_ENV ==='production'? 'http://119.12.172.94:8222':'http://localhost:8222'
+      // baseURL: process.env.NODE_ENV ==='production'? 'http://www.changliulab:8222':'http://localhost:8222'
       // baseURL: process.env.NODE_ENV ==='development'? 'http://119.12.172.94:8222':'http://localhost:8222'
+      // baseURL: 'http://119.12.172.94:8222'
     }
+  },
+  proxy: {
+    '/api/': { target: 'http://www.changliulab.com', pathRewrite: {'^/api/': ''} }
   },
   axios: {
     // baseURL: "http://localhost:8222", // Used as fallback if no runtime config is provided
-    baseURL: "http://localhost:8222", // Used as fallback if no runtime config is provided
+    // baseURL: "http://localhost:8222", // Used as fallback if no runtime config is provided
   },
 };
