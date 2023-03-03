@@ -1,32 +1,20 @@
 <template>
-  <div class="flex justify-center items-center">
-    <div class="w-full max-w-7xl ">
-      <div class=" p-8 markdown-body" v-html="methodology"></div>
-    </div>
+  <div>
+    <MethodologyTable :value="methodologyPage.records" />
   </div>
 </template>
 <script>
-import pako from 'pako'
-import { base64ToBytes } from '@/utils/base64';
-import { Language } from '@/common/types';
+import MethodologyTable from '../../components/MethodologyTable.vue';
 export default {
-  asyncData({ $methodologyApi }) {
-    return $methodologyApi.getMethodology(Language.CHINESE).then((response) => {
-      console.log(response.data);
-      let html
-      try {
-        const bytes = base64ToBytes(response.data.publishedHtmlBrBase64);
-        html = pako.inflate(bytes, { to: "string" });
-        console.log(html)
-      } catch (error) {
-        html = " ";
-      }
-      return {
-        methodology: html,
-      };
-    });
-  },
+    asyncData({ $methodologyApi, query }) {
+        const page = query.page ? query.page : 1;
+        return $methodologyApi.getPageMethodology(page, 10).then((response) => {
+          console.log(response)
+            return {
+                methodologyPage: response.data,
+            };
+        });
+    },
+    components: { MethodologyTable }
 };
 </script>
-<style module>
-</style>
