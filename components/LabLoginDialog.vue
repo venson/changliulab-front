@@ -89,7 +89,7 @@ export default {
         async login() {
             try {
                 let res = await this.$auth.loginWith("local", { data: this.loginInfo });
-                console.log(this.$auth);
+                // console.log(res)
             }
             catch (error) {
                 console.log(error);
