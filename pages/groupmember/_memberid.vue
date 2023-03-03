@@ -16,7 +16,7 @@
       <div class="p-8">
         <p class="text-2xl pb-2">研究方向</p>
 
-        <div class="w-full max-w-7xl">
+        <div class="w-full max-w-7xl" v-if="researches">
           <ResearchViewer :value="researches" />
         </div>
       </div>
@@ -52,10 +52,7 @@ export default {
   watchQuery: ["spage", "cpage"],
   async asyncData({
     params,
-    error,
     $memberApi,
-    $courseApi,
-    $scholarApi,
     query,
   }) {
     const scholarPage = query.spage ? query.spage : 1;
@@ -67,11 +64,10 @@ export default {
       8,
       8
     );
-    // const scholarRes = await $scholarApi.getPageScholarByMemberId(params.memberid, scholarPage, 8);
-    // const courseRes = await $courseApi.getPageCourseByMemberId(params.memberid, coursePage, 8);
     const researches = res.data.researches;
     console.log(res)
     console.log(researches)
+    if(researches && researches.length>0)
     researches.forEach((research) => {
       try {
         const bytes = base64ToBytes(research.publishedHtmlBrBase64);
