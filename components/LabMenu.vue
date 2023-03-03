@@ -27,9 +27,9 @@
       </a>
     </div>
     <!-- memu for full page -->
-    <div class="sm:flex bg-green-700 hidden">
+    <div class="sm:flex  hidden">
       <nuxt-link
-        class="py-3 px-3 lg:px-6 hover:text-yellow-300 border-b-2 hover:border-yellow-300 border-green-700"
+        class="py-3 px-3 lg:px-6 hover:text-yellow-300 border-b-2 hover:border-yellow-300 border-transparent	"
         :class="
           pathMatch(path, menu.url)
             ? 'text-yellow-300 border-yellow-300'

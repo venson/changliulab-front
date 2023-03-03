@@ -23,7 +23,7 @@
                 <!-- <div class="font-extrabold text-transparent text-8xl bg-clip-text bg-gradient-to-r from-green-200 via-green-700  to-green-300  text-white sm:text-4xl sm:px-4 italic">Welcome to Chang Liu Team</div> -->
                 <div class="text-md  text-green-700 sm:text-xl lg:text-2xl sm:px-4 italic">Trees cell wall formation and wall signal Group</div>
             </div>
-            <div class="bg-green-400">
+            <div class="bg-emerald-400">
 
                 <div class="flex justify-between items-center max-w-7xl mx-auto ">
                     <LabMenu class=""  ></LabMenu>
