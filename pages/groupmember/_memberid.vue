@@ -13,10 +13,10 @@
         <p class="text-2xl pb-2">职业履历</p>
         <div>{{ member.career }}</div>
       </div>
-      <div class="p-8">
+      <div class="p-8" v-if="researches">
         <p class="text-2xl pb-2">研究方向</p>
 
-        <div class="w-full max-w-7xl" v-if="researches">
+        <div class="w-full max-w-7xl" >
           <ResearchViewer :value="researches" />
         </div>
       </div>
@@ -50,11 +50,7 @@ import { base64ToBytes } from "@/utils/base64";
 import ResearchViewer from "../../components/ResearchViewer.vue";
 export default {
   watchQuery: ["spage", "cpage"],
-  async asyncData({
-    params,
-    $memberApi,
-    query,
-  }) {
+  async asyncData({ params, $memberApi, query }) {
     const scholarPage = query.spage ? query.spage : 1;
     const coursePage = query.cpage ? query.cpage : 1;
     const res = await $memberApi.getMemberById(
@@ -64,19 +60,21 @@ export default {
       8,
       8
     );
+    console.log(res);
     let researches;
-    if(res.data.researches && res.data.researches.length>0)
-    researches = res.data.researches;
-    researches.forEach((research) => {
-      try {
-        const bytes = base64ToBytes(research.publishedHtmlBrBase64);
-        // html.push(pako.inflate(bytes, { to: "string" }));
-        research.html = pako.inflate(bytes, { to: "string" });
-      } catch (error) {
-        research.html = " ";
-        // html.push(" ");
-      }
-    });
+    if (res.data.researches && res.data.researches.length > 0) {
+      researches = res.data.researches;
+      researches.forEach((research) => {
+        try {
+          const bytes = base64ToBytes(research.publishedHtmlBrBase64);
+          // html.push(pako.inflate(bytes, { to: "string" }));
+          research.html = pako.inflate(bytes, { to: "string" });
+        } catch (error) {
+          research.html = " ";
+          // html.push(" ");
+        }
+      });
+    }
     return {
       member: res.data.member,
       pageCourse: res.data.courses,
