@@ -7,6 +7,7 @@ checkPid(){
     if [ -n "$ps" ]; then
       echo "Following PID are the server"
       pid=$(echo "$ps" | awk '{print $1}')
+      echo "${pid}"
     else
     echo "No service is running"
     pid=0
