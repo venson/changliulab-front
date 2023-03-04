@@ -12,9 +12,10 @@ import ResearchViewer from "../../components/ResearchViewer.vue";
 export default {
     asyncData({ $researchApi }) {
         return $researchApi.getResearch().then((response) => {
-            let html = new Array();
+            // let html = new Array();
             let researches = response.data;
-            console.log(researches);
+            // console.log(response);
+
             researches.forEach((research) => {
                 try {
                     const bytes = base64ToBytes(research.publishedHtmlBrBase64);
