@@ -20,12 +20,12 @@
           <ResearchViewer :value="researches" />
         </div>
       </div>
-      <div class="p-8">
+      <div class="p-8" v-if="pageScholar && pageScholar.total>0" >
         <p class="text-2xl pb-2">发表论文</p>
         <ScholarTable class="w-full" :scholars="pageScholar.records" />
         <Pagination :page="pageScholar" @goToPage="goToScholarPage" />
       </div>
-      <div class="p-8">
+      <div class="p-8" v-if="pageCourse && pageCourse.total>0">
         <p class="text-2xl pb-2">主讲课程</p>
         <div class="flex flex-col sm:flex-row">
           <CourseCard
