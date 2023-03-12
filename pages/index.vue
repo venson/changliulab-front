@@ -4,7 +4,7 @@
       <ImgCarousel :value="banners" />
       <!-- <LabCarousel  :value="banners"/> -->
     </div>
-    <div class="pt-8">
+    <div class="pt-8" v-if="activityList && activityList.length>0">
       <div class=" text-center font-semibold text-3xl">近期活动</div>
       <div class="">
         <ActivityTable :value="activityList" />
